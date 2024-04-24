@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Provider } from "react-redux";
+import Router from "./router/index";
 
 import "react-toastify/dist/ReactToastify.css";
+import Login from "./pages/Login";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -30,10 +32,9 @@ const App = () => {
   return (
     <div>
       {" "}
-      <h1 className="text-3xl  font-bold underline">Hello world!</h1>
-      {/* <div>
-          {isLoggedIn ? <Router /> : <Login setIsLoggedIn={setIsLoggedIn} />}
-        </div> */}
+      <div>
+        {isLoggedIn ? <Router /> : <Login setIsLoggedIn={setIsLoggedIn} />}
+      </div>
     </div>
   );
 };

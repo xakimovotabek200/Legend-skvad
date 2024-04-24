@@ -1,19 +1,19 @@
 import CategoryController from "./Category-controller";
-import itemController from "./item-controller";
-import itemTranzaction from "./item-tranzaction";
-import itemTypeController from "./item-type-controller";
-import matCatController from "./mat-cat-controller";
+import ItemController from "./Item-controller";
+import ItemTranzaction from "./Item-tranzaction";
+import ItemTypeController from "./Item-type-controller";
+import MatCatController from "./Mat-cat-controller";
 import MaterialController from "./Material-controller";
-import MaterialTranzaction from "./material-tranzaction";
+import MaterialTranzaction from "./Material-tranzaction";
 import MaterialTypeController from "./Material-type-con";
 import UserController from "./Users-controller";
 
 export {
   CategoryController,
-  itemController,
-  itemTranzaction,
-  itemTypeController,
-  matCatController,
+  ItemController,
+  ItemTranzaction,
+  ItemTypeController,
+  MatCatController,
   MaterialController,
   MaterialTranzaction,
   MaterialTypeController,

@@ -9,14 +9,15 @@ const Login = ({ setIsLoggedIn }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { email, password } = e.target;
+      const { username, password } = e.target;
       const response = await axios.post("auth/authenticate", {
-        email: email.value,
+        username: username.value,
         password: password.value,
       });
       if (response.data.access_token) {
         sessionStorage.setItem("token", response.data.access_token);
         sessionStorage.setItem("user_id", response.data?.id);
+        sessionStorage.setItem("role", response.data?.role);
         window.location.reload();
         setIsLoggedIn(true);
       } else {
@@ -38,7 +39,7 @@ const Login = ({ setIsLoggedIn }) => {
       <div className="relative flex flex-col justify-center h-screen overflow-hidden">
         <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg">
           <h1 className="text-3xl font-semibold text-center text-purple-700">
-            O'zKOJ
+            Legend Ombori
           </h1>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
@@ -50,7 +51,7 @@ const Login = ({ setIsLoggedIn }) => {
                 placeholder="Foydalanuvchi nomi"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 required
-                name="email"
+                name="username"
               />
             </div>
             <div>
