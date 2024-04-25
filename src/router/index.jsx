@@ -1,7 +1,7 @@
 import { Button, Layout, Menu, theme } from "antd";
 import React, { useLayoutEffect, useState } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
-import { routes } from "./routes";
+import { hiddenroutes, routes } from "./routes";
 
 const index = () => {
   const { pathname } = useLocation();
@@ -133,6 +133,9 @@ const index = () => {
           >
             <Routes>
               {routes?.map((route, ind) => (
+                <Route key={ind} path={route.path} element={route.element} />
+              ))}
+              {hiddenroutes?.map((route, ind) => (
                 <Route key={ind} path={route.path} element={route.element} />
               ))}
             </Routes>

@@ -7,6 +7,7 @@ import MaterialController from "./Material-controller";
 import MaterialTranzaction from "./Material-tranzaction";
 import MaterialTypeController from "./Material-type-con";
 import UserController from "./Users-controller";
+import IdItem from "./Item-type-controller/IdItem";
 
 export {
   CategoryController,
@@ -18,4 +19,5 @@ export {
   MaterialTranzaction,
   MaterialTypeController,
   UserController,
+  IdItem,
 };

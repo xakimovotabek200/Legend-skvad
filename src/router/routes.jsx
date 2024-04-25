@@ -10,6 +10,7 @@ import {
   ItemTranzaction,
   ItemTypeController,
   MatCatController,
+  IdItem,
 } from "../pages";
 
 const token = sessionStorage.getItem("token");
@@ -102,5 +103,13 @@ export const routes = [
     icon: <span className="fa-solid fa-home" />,
     element: token ? <MatCatController /> : <Login />,
     hidden: false,
+  },
+];
+
+export const hiddenroutes = [
+  {
+    key: 100,
+    path: "/item-controller/:id",
+    element: token ? <IdItem /> : <Login />,
   },
 ];
