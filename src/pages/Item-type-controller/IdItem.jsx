@@ -1,6 +1,7 @@
 import { Input } from "antd";
 import React from "react";
 import ItemController from "../Item-controller";
+import PostItemId from "./PostIdItem";
 
 const { Search } = Input;
 
@@ -9,13 +10,16 @@ const IdItem = () => {
 
   return (
     <div>
-      <Search
-        placeholder="input search text"
-        enterButton="Search"
-        size="large"
-        onSearch={onSearch}
-      />
+      <div>
+        <Search
+          placeholder="input search text"
+          enterButton="Search"
+          size="large"
+          onSearch={onSearch}
+        />
+      </div>
       <ItemController />
+      <PostItemId />
     </div>
   );
 };
