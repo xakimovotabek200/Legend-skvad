@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import DeleteCategory from "./DeleteCategory";
 import EditCategory from "./EditCategory";
 import PostCategory from "./PostCategory";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const [data, setData] = useState(null);
@@ -35,7 +36,12 @@ const Index = () => {
                 className="bg-white border mt-5 rounded-md shadow-md px-4 flex flex-col-2 items-center p-4 justify-between"
                 key={item?.id}
               >
-                <p className="text-xl font-semibold">{item?.name}</p>
+                <Link
+                  to={`/category-controller/${item.id}`}
+                  className="text-xl font-semibold"
+                >
+                  {item?.name}
+                </Link>
                 <div className="mt-4">
                   <DeleteCategory id={item.id} getData={getData} />
                   <EditCategory data={item} id={item.id} getData={getData} />
