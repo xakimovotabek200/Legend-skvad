@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import App from "./App.jsx";
 import "./index.css";
 
-axios.defaults.baseURL = "http://37.77.104.188:8080/api/v1/";
+axios.defaults.baseURL = "https://sklad.legends.uz/api/v1/";
 
 const token = sessionStorage.getItem("token");
 

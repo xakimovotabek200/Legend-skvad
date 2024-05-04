@@ -9,17 +9,18 @@ const IdItem = () => {
   const onSearch = (value, _e, info) => console.log(info?.source, value);
 
   return (
-    <div>
+    <div className="flex items-center justify-center">
       <div>
         <Search
+          className="w-[660px]"
           placeholder="input search text"
           enterButton="Search"
           size="large"
           onSearch={onSearch}
         />
       </div>
-      <ItemController />
-      <PostItemId />
+      {/* <ItemController /> */}
+      {/* <PostItemId /> */}
     </div>
   );
 };
