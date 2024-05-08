@@ -1,29 +1,25 @@
-import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
-import React, { useState, useEffect } from "react";
+import { Button, Form, Input, Modal, Select } from "antd";
 import axios from "axios";
-
-const { Option } = Select;
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const PostItemController = ({ getData }) => {
+  const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
-  // Retrieve adminId from sessionStorage
-  const adminId = sessionStorage.getItem("user_id");
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`/item-types/${id}`);
+      setCategories(response.data.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get("/categories");
-        setCategories(response.data.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
     fetchCategories();
   }, []);
 
@@ -42,12 +38,9 @@ const PostItemController = ({ getData }) => {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      await axios.post("/items", {
-        itemType: values.name,
-        description: values.description,
-        quantity: parseInt(values.quantity),
-        adminId: parseInt(adminId),
-        categoryId: parseInt(selectedCategoryId),
+      await axios.post("/item-types", {
+        name: values.name,
+        categoryId: parseInt(id),
       });
 
       setLoading(false);
@@ -68,57 +61,23 @@ const PostItemController = ({ getData }) => {
       </Button>
       <Modal
         title="Maxsulot turini yaratish"
-        visible={isModalOpen}
+        open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         confirmLoading={loading}
       >
         <Form onFinish={handleSubmit}>
           <Form.Item
-            label="Categoriya Nomis"
-            name="categoryId"
+            label="Nomi"
+            name="name"
             rules={[
               {
                 required: true,
-                message: "Please select a category!",
+                message: "Please select a name!",
               },
             ]}
           >
-            <Select
-              placeholder="Select a category"
-              onChange={setSelectedCategoryId}
-            >
-              {categories.map((category) => (
-                <Option key={category.id} value={category.id}>
-                  {category.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Tavsif"
-            name="description"
-            rules={[
-              {
-                required: true,
-                message: "Please input description!",
-              },
-            ]}
-          >
-            <Input.TextArea />
-          </Form.Item>
-
-          <Form.Item
-            label="Miqdori"
-            name="quantity"
-            rules={[
-              {
-                required: true,
-                message: "Please input quantity!",
-              },
-            ]}
-          >
-            <InputNumber className="w-full" min={1} max={10} />
+            <Input />
           </Form.Item>
 
           {error && <p style={{ color: "red" }}>{error}</p>}

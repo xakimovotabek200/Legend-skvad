@@ -68,7 +68,7 @@ const PostItemController = ({ getData }) => {
       </Button>
       <Modal
         title="Maxsulot turini yaratish"
-        visible={isModalOpen}
+        open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         confirmLoading={loading}
