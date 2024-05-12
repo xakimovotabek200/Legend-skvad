@@ -12,19 +12,17 @@ const CategoryId = () => {
   const [error, setError] = useState(null);
   const onSearch = (value, _e, info) => console.log(info?.source, value);
 
-  async function getData() {
-    await axios
-      .get(`/categories/${id}`)
-      .then((response) => {
-        setData(response.data.data);
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
-  }
+  const fetchItemTypeCategory = async () => {
+    try {
+      const response = await axios.get(`/item-types/category/${id}`);
+      setCategoryData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
 
   useEffect(() => {
-    getData();
+    fetchItemTypeCategory();
   }, []);
 
   return (
@@ -37,7 +35,6 @@ const CategoryId = () => {
           onSearch={onSearch}
         />
       </div>
-      {/* <ItemController /> */}
       <PostId />
     </div>
   );

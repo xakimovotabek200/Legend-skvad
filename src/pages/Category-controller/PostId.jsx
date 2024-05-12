@@ -1,6 +1,6 @@
-import { Button, Form, Input, Modal, Select } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
 const PostItemController = ({ getData }) => {
@@ -10,18 +10,7 @@ const PostItemController = ({ getData }) => {
   const [error, setError] = useState(null);
   const [categories, setCategories] = useState([]);
 
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get(`/item-types/${id}`);
-      setCategories(response.data.data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  const [categorydata, setCategoryData] = useState(null);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -42,7 +31,6 @@ const PostItemController = ({ getData }) => {
         name: values.name,
         categoryId: parseInt(id),
       });
-
       setLoading(false);
       setIsModalOpen(false);
       setError(null);

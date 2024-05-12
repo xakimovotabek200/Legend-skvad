@@ -2,7 +2,7 @@ import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";
 import axios from "axios";
 
-const PostItemController = ({ getData }) => {
+const PostItemController = ({ getData, data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
