@@ -9,6 +9,7 @@ import MaterialTypeController from "./Material-type-con";
 import UserController from "./Users-controller";
 import IdItem from "./Item-type-controller/IdItem";
 import CategoryId from "./Category-controller/CategoryId";
+import MatControllerId from "../pages/Material-controller/MatControllerId";
 
 export {
   CategoryController,
@@ -22,4 +23,5 @@ export {
   UserController,
   IdItem,
   CategoryId,
+  MatControllerId,
 };

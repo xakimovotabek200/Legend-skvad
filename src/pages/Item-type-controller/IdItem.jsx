@@ -1,25 +1,21 @@
 import { Button, Form, Input, Modal, Select, Table, message } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import TableItem from "../Item-controller/TableItem";
 
 const IdItem = () => {
-  const [current, setCurrent] = useState(1);
-  const [data, setData] = useState([]);
   const { id } = useParams();
+  const { state } = useLocation();
+  const [data, setData] = useState([]);
   const [nomi, setNomi] = useState([]);
-  const [nomiId, setNomiId] = useState(null);
+  const [qidir, setQidir] = useState([]);
   const [miqdori, setMiqdori] = useState("");
   const [description, setDescription] = useState("");
-  const [searchValue, setSearchValue] = useState("");
-  const { Search } = Input;
-  const [qidir, setQidir] = useState([]);
-  const [oquan, setOquan] = useState("");
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [issModalOpen, setIssModalOpen] = useState(false);
+
+  const { Search } = Input;
   const user_id = sessionStorage.getItem("user_id");
 
   const showModal = () => {
@@ -37,16 +33,31 @@ const IdItem = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/items");
-        setData(response.data.data);
-      } catch (error) {
-        toast.error("Ma'lumotlarni olishda xatolik yuz berdi");
-      }
-    };
+  const search = async (inputValue) => {
+    try {
+      const response = await axios.get(`/items/search?name=${inputValue}`);
+      setQidir(response.data?.data);
+      // setMaterial(response.data);
 
+      console.log(response.data?.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    search();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("/items");
+      setData(response.data?.data?.filter((item) => item.itemType === +id));
+    } catch (error) {
+      toast.error("Ma'lumotlarni olishda xatolik yuz berdi");
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -66,11 +77,11 @@ const IdItem = () => {
   const add = async (e) => {
     try {
       const sendData = {
-        itemType: nomiId,
+        itemType: parseInt(id),
         description: description,
         quantity: parseInt(miqdori),
-        adminId: user_id,
-        categoryId: parseInt(id),
+        adminId: +user_id,
+        categoryId: parseInt(state?.category?.id),
       };
       const response = await axios.post("/items", sendData);
       if (response.status === 200) {
@@ -98,7 +109,7 @@ const IdItem = () => {
           allowClear
           enterButton="Qidirish"
           size="large"
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={(e) => search(e.target.value)} // Change here
           className="w-[500px] bg-blue-500 rounded-md"
         />
         <Button
@@ -118,7 +129,7 @@ const IdItem = () => {
         >
           <Form onFinish={handleOk}>
             <div className="w-full flex flex-col gap-4">
-              <Select
+              {/* <Select
                 className="w-full"
                 placeholder="Mahsulot"
                 onChange={(value) => setNomiId(value)}
@@ -128,7 +139,7 @@ const IdItem = () => {
                     {item.name}
                   </Select.Option>
                 ))}
-              </Select>
+              </Select> */}
               <Input
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Tavsif"
@@ -145,7 +156,7 @@ const IdItem = () => {
           </Form>
         </Modal>
       </div>
-      <TableItem data={data} nomi={nomi} />
+      <TableItem data={data} nomi={nomi} fetchData={fetchData} />
     </div>
   );
 };

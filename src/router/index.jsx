@@ -32,10 +32,10 @@ const index = () => {
     ),
 
     getItem("material", "sub1", <span className="fa-solid fa-shirt" />, [
-      getItem(
-        <Link to={"/material-controller"}>material-controller</Link>,
-        "3"
-      ),
+      // getItem(
+      //   // <Link to={"/material-controller"}>material-controller</Link>,
+      //   "3"
+      // ),
       getItem(
         <Link to={"/material-tranzaction"}>material-tranzaction</Link>,
         "4"
@@ -45,7 +45,7 @@ const index = () => {
         "5"
       ),
       getItem(<Link to="/mat-cat-controller">mat-cat-controller</Link>, "11"),
-      getItem(<Link to="/material-controller">material-controller</Link>, "55"),
+      // getItem(<Link to="/material-controller">material-controller</Link>, "55"),
     ]),
     getItem("item", "sub2", <span className="fa-solid fa-home" />, [
       getItem(
@@ -57,7 +57,7 @@ const index = () => {
         <Link to="/item-type-controller">item-type-controller</Link>,
         "85"
       ),
-      getItem(<Link to="/item-controller">item-controller</Link>, "8"),
+      // getItem(<Link to="/item-controller">item-controller</Link>, "8"),
       getItem(<Link to="/item-tranzaction">item-tranzaction</Link>, "6"),
     ]),
     getItem(

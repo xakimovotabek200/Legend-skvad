@@ -37,7 +37,7 @@ const Index = () => {
                 key={item?.id}
               >
                 <Link
-                  to={`/item-controller/${item.id}`}
+                  to={`/material-controller/${item.id}`}
                   className="text-xl font-semibold"
                 >
                   {item?.name}

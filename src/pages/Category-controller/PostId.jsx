@@ -8,9 +8,6 @@ const PostItemController = ({ getData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [categories, setCategories] = useState([]);
-
-  const [categorydata, setCategoryData] = useState(null);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -31,6 +28,7 @@ const PostItemController = ({ getData }) => {
         name: values.name,
         categoryId: parseInt(id),
       });
+      window.location.reload();
       setLoading(false);
       setIsModalOpen(false);
       setError(null);

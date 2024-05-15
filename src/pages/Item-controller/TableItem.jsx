@@ -1,8 +1,43 @@
 import React, { useState } from "react";
-import { Button, Empty } from "antd";
+import { Button, Empty, Form, Input, Modal } from "antd";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const TableItem = ({ data, nomi }) => {
-  console.log(nomi, "nomi");
+const TableItem = ({ data, nomi, fetchData }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleDelete = async (values) => {
+    const deleteData = {
+      itemType: modalData?.itemType,
+      categoryId: modalData?.categoryId,
+      description: modalData?.description,
+      quantity: parseInt(values.delete),
+      adminId: modalData?.userId,
+    };
+    await axios
+      .delete("/items", deleteData)
+      .then((response) => {
+        fetchData();
+        toast.success("Yuborish muvaffaqiyatli amalga oshirildi");
+      })
+      .catch((error) => {
+        toast.error("Xatolik yuz berdi:", error);
+      });
+  };
+
   return (
     <div className="mt-5">
       <table className="w-full bg-white border text-black">
@@ -25,31 +60,44 @@ const TableItem = ({ data, nomi }) => {
           {data?.length > 0 ? (
             data?.map((item, index) => {
               return (
-                <tr key={item?.id}>
+                <tr key={item?.id} className="text-center">
                   <td className="border p-3">{index + 1}</td>
                   <td className="border p-3">
-                    {item[0]?.id}
-                    {/* {nomi?.map?.(
-                      (item) => item?.id === item?.itemType && item.name
-                    )} */}
+                    {nomi?.map?.(
+                      (name) => name?.id === item?.itemType && name.name
+                    )}
                   </td>
 
                   <td className="border p-3">{item?.userId}</td>
-                  <td className="border p-3">{item?.categoryId}</td>
+                  <td className="border p-3">
+                    {
+                      nomi?.find?.(
+                        (name) => name?.category?.id === item?.categoryId
+                      )?.category?.name
+                    }
+                  </td>
                   <td className="border p-3">{item?.quantity}</td>
                   <td className="border p-3">
                     {" "}
-                    {item?.updatedAt.slice(0, 10) +
+                    {item?.updatedAt?.slice?.(0, 10) +
                       ", " +
-                      item.updatedAt.slice(11, 16)}
+                      item.updatedAt?.slice?.(11, 16)}
                   </td>
                   <td className="border p-3">
-                    {item?.createdAt.slice(0, 10) +
+                    {item?.createdAt?.slice?.(0, 10) +
                       ", " +
-                      item.createdAt.slice(11, 16)}
+                      item.createdAt?.slice?.(11, 16)}
                   </td>
                   <td className="border p-3">
-                    <Button type="primary">olish</Button>
+                    <Button
+                      danger
+                      type="primary"
+                      onClick={() => {
+                        showModal(), setModalData(item);
+                      }}
+                    >
+                      Olish
+                    </Button>
                   </td>
                 </tr>
               );
@@ -65,6 +113,31 @@ const TableItem = ({ data, nomi }) => {
           )}
         </tbody>
       </table>
+      <Modal
+        title="Maxsulot turini yaratish"
+        open={isModalOpen}
+        onCancel={handleCancel}
+      >
+        <Form onFinish={handleDelete}>
+          <Form.Item
+            name="delete"
+            label="Miqdorni kiriting"
+            rules={[{ required: true, message: "miqdorni kriting!!!" }]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              htmlType="submit"
+              className="w-full"
+              size="large"
+              type="primary"
+            >
+              Saqlash
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

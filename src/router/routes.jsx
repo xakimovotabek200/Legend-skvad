@@ -12,6 +12,7 @@ import {
   MatCatController,
   IdItem,
   CategoryId,
+  MatControllerId,
 } from "../pages";
 
 const token = sessionStorage.getItem("token");
@@ -112,6 +113,11 @@ export const hiddenroutes = [
     key: 100,
     path: "/item-controller/:id",
     element: token ? <IdItem /> : <Login />,
+  },
+  {
+    key: 100,
+    path: "/material-controller/:id",
+    element: token ? <MatControllerId /> : <Login />,
   },
   {
     key: 100,

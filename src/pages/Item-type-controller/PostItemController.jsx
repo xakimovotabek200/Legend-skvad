@@ -1,11 +1,13 @@
 import { Button, Form, Input, Modal } from "antd";
-import React, { useState } from "react";
 import axios from "axios";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
-const PostItemController = ({ getData, data }) => {
+const PostItemController = ({ getData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { id } = useParams();
 
   const showModal = () => {
     setIsModalOpen(true);
